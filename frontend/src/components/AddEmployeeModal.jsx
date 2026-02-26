@@ -54,7 +54,7 @@ const AddEmployeeModal = ({ isOpen, onClose, onAdd, initialData = null, isEdit =
                 <form onSubmit={handleSubmit} className="p-6 space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                            Name <span className="text-red-500">*</span> (e.g. Aditya)
+                            Name <span className="text-red-500">*</span> (e.g. Suresh)
                         </label>
                         <input
                             type="text"
@@ -90,7 +90,7 @@ const AddEmployeeModal = ({ isOpen, onClose, onAdd, initialData = null, isEdit =
                             value={formData.display_name}
                             onChange={(e) => setFormData({ ...formData, display_name: e.target.value })}
                             className="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 hover:border-indigo-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all dark:text-white"
-                            placeholder="e.g. Aditya DMF"
+                            placeholder="e.g. Suresh District Food Officer"
                         />
                     </div>
 
