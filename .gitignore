@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+*.env
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+backend/data/
+
+# Logs
+*.log
+backend.log
+email_debug.txt
+
+# Credentials & secrets
+credentials.json
+*.json.backup
+employee_backup.json
+seed_employees.bak
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Xcode
+*.xcuserstate
+xcuserdata/
+DerivedData/
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+
+# IDE
+.vscode/
+.idea/
+
+# Build logs
+Build\ TaskDashboard_*.txt
+Run\ TaskDashboard_*.txt

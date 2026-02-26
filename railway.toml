@@ -1,0 +1,9 @@
+[build]
+dockerfilePath = "Dockerfile"
+
+[deploy]
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
+
+# Volume mount: In Railway dashboard, mount a volume to /app/backend/data
+# This ensures tasks.db persists across deployments and restarts.
