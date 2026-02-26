@@ -27,8 +27,8 @@ const Layout = ({ children, user, onLogout }) => {
     return (
         <div className={`min-h-screen flex transition-colors duration-500 overflow-hidden relative ${isDark ? 'dark bg-dark-bg' : 'bg-slate-50'}`}>
             {/* Ambient Background Glows */}
-            <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-sky-500/5 dark:bg-sky-500/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
-            <div className="fixed bottom-[-10%] right-[-10%] w-[35%] h-[35%] bg-blue-500/5 dark:bg-blue-500/10 blur-[100px] rounded-full pointer-events-none z-0"></div>
+            <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-500/5 dark:bg-indigo-500/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+            <div className="fixed bottom-[-10%] right-[-10%] w-[35%] h-[35%] bg-violet-500/5 dark:bg-violet-500/10 blur-[100px] rounded-full pointer-events-none z-0"></div>
 
             {/* Sidebar */}
             <motion.aside
@@ -37,7 +37,7 @@ const Layout = ({ children, user, onLogout }) => {
                 className="glass-card border-r border-slate-200/60 dark:border-white/5 fixed h-full z-30 hidden md:flex flex-col shadow-premium-lg"
             >
                 <div className="p-7 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-600 to-blue-700 flex items-center justify-center shrink-0 shadow-lg shadow-sky-500/30">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-700 to-violet-700 flex items-center justify-center shrink-0 shadow-lg shadow-indigo-500/30">
                         <span className="text-white font-bold text-xl">DA</span>
                     </div>
                     {sidebarOpen && (
@@ -57,8 +57,8 @@ const Layout = ({ children, user, onLogout }) => {
                             key={item.label}
                             onClick={() => navigate(item.path)}
                             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-premium group relative ${navigate.path === item.path
-                                ? 'bg-sky-600 text-white shadow-lg shadow-sky-500/25'
-                                : 'text-slate-500 dark:text-dark-muted hover:bg-slate-100 dark:hover:bg-white/5 hover:text-sky-600 dark:hover:text-sky-400'
+                                ? 'bg-indigo-700 text-white shadow-lg shadow-indigo-500/25'
+                                : 'text-slate-500 dark:text-dark-muted hover:bg-slate-100 dark:hover:bg-white/5 hover:text-indigo-700 dark:hover:text-indigo-400'
                                 }`}
                         >
                             <item.icon size={20} className="transition-transform group-hover:scale-110" />
@@ -79,7 +79,7 @@ const Layout = ({ children, user, onLogout }) => {
                         </button>
                         {sidebarOpen && (
                             <button onClick={toggleTheme} className="p-2.5 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl text-slate-400 dark:text-dark-muted transition-colors">
-                                {isDark ? <Sun size={20} className="text-amber-400" /> : <Moon size={20} className="text-sky-600" />}
+                                {isDark ? <Sun size={20} className="text-amber-400" /> : <Moon size={20} className="text-indigo-600" />}
                             </button>
                         )}
                     </div>
@@ -94,7 +94,7 @@ const Layout = ({ children, user, onLogout }) => {
                         <h1 className="text-2xl font-bold premium-gradient-text">District Admin</h1>
                         <div className="flex gap-2">
                             <button onClick={toggleTheme} className="p-2.5 rounded-xl bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-white/5 shadow-sm">
-                                {isDark ? <Sun size={20} className="text-amber-400" /> : <Moon size={20} className="text-sky-600" />}
+                                {isDark ? <Sun size={20} className="text-amber-400" /> : <Moon size={20} className="text-indigo-600" />}
                             </button>
                             <button onClick={onLogout} className="p-2.5 rounded-xl bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-white/5 shadow-sm text-red-500">
                                 <LogOut size={20} />

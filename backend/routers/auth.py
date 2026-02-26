@@ -49,29 +49,16 @@ def create_access_token(data: dict):
 
 @router.post("/login")
 def login(request: LoginRequest, db: Session = Depends(get_db)):
-    # EMERGENCY BYPASS: Allow admin to login with ANY password
-    if request.username == "admin":
-        access_token = create_access_token(data={"sub": "admin", "role": "admin"})
-        return {
-            "access_token": access_token, 
-            "token_type": "bearer",
-            "user": {
-                "username": "admin",
-                "role": "admin",
-                "id": 1 # Dummy ID
-            }
-        }
-
     user = db.query(models.User).filter(models.User.username == request.username).first()
     if not user:
-        raise HTTPException(status_code=400, detail="User not found")
+        raise HTTPException(status_code=400, detail="Invalid username or password")
     
     if not verify_password(request.password, user.hashed_password):
-        raise HTTPException(status_code=400, detail="Password mismatch")
+        raise HTTPException(status_code=400, detail="Invalid username or password")
     
     access_token = create_access_token(data={"sub": user.username, "role": user.role})
     return {
-        "access_token": access_token, 
+        "access_token": access_token,
         "token_type": "bearer",
         "user": {
             "username": user.username,
@@ -79,22 +66,6 @@ def login(request: LoginRequest, db: Session = Depends(get_db)):
             "id": user.id
         }
     }
-
-# --- Debug Endpoints (Remove in Production later) ---
-from seed_auth import seed_admin
-
-@router.get("/debug/users")
-def debug_users(db: Session = Depends(get_db)):
-    users = db.query(models.User).all()
-    return [{"username": u.username, "role": u.role, "email": u.email, "hint": u.password_hint} for u in users]
-
-@router.get("/debug/seed")
-def debug_seed():
-    try:
-        seed_admin()
-        return {"message": "Seed script executed manually. Try logging in now."}
-    except Exception as e:
-        return {"error": str(e)}
 
 @router.get("/hint/{username}")
 def get_hint(username: str, db: Session = Depends(get_db)):
