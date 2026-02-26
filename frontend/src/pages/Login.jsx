@@ -8,27 +8,17 @@ import { api } from '../services/api';
 const Login = ({ onLogin }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState('admin'); // viewer or admin
+    const [role, setRole] = useState('admin');
     const [darkMode, setDarkMode] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    // Auth Features
     const [showForgot, setShowForgot] = useState(false);
     const [email, setEmail] = useState('');
     const [hint, setHint] = useState('');
     const [error, setError] = useState('');
 
-    useEffect(() => {
-        if (showForgot && role === 'admin') {
-            setEmail('jayant.nahata@alumni.iitd.ac.in');
-        } else if (!showForgot) {
-            setEmail('');
-        }
-    }, [showForgot, role]);
-
     const navigate = useNavigate();
 
-    // Dark Mode Logic
     useEffect(() => {
         if (darkMode) {
             document.documentElement.classList.add('dark');
@@ -43,13 +33,11 @@ const Login = ({ onLogin }) => {
         setHint('');
 
         if (role === 'viewer') {
-            // Mock Login for Viewer
             const user = { username, role };
             localStorage.setItem('user', JSON.stringify(user));
             onLogin(user);
             navigate('/');
         } else {
-            // Real Admin Login
             setLoading(true);
             try {
                 const data = await api.login({ username, password });
@@ -59,8 +47,6 @@ const Login = ({ onLogin }) => {
                 navigate('/');
             } catch (err) {
                 setError("Invalid credentials.");
-                // Fetch hint automatically on failure? Or just show button?
-                // User asked for "password hint ... there". I'll show a button if it fails.
             } finally {
                 setLoading(false);
             }
@@ -72,7 +58,7 @@ const Login = ({ onLogin }) => {
         setLoading(true);
         try {
             await api.forgotPassword(email);
-            alert("If registered, a reset link has been sent to your email (and logged to server console).");
+            alert("If registered, a reset link has been sent to your email.");
             setShowForgot(false);
         } catch (e) {
             alert("Error sending link.");
@@ -96,38 +82,37 @@ const Login = ({ onLogin }) => {
 
     return (
         <div className="min-h-screen flex flex-col md:flex-row bg-slate-50 dark:bg-dark-bg transition-colors duration-300">
-            {/* Left Side - Branding & Info */}
+            {/* Left Side - Branding */}
             <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="md:w-1/2 bg-gradient-to-br from-indigo-700 via-purple-700 to-indigo-900 text-white p-12 flex flex-col relative overflow-hidden"
+                className="md:w-1/2 bg-gradient-to-br from-sky-700 via-blue-700 to-slate-800 text-white p-12 flex flex-col relative overflow-hidden"
             >
                 <div className="absolute top-0 left-0 w-full h-full bg-pattern opacity-10 pointer-events-none"></div>
 
                 {/* Branding */}
                 <div className="flex flex-col items-center gap-3 z-10 mt-8">
                     <div className="bg-white/20 p-3 rounded-xl backdrop-blur-sm shadow-inner">
-                        <span className="text-3xl font-bold tracking-tight">D</span>
+                        <span className="text-3xl font-bold tracking-tight">DA</span>
                     </div>
-                    <span className="text-xl font-medium opacity-90 tracking-wide uppercase letter-spacing-2">Dantewada Administration</span>
+                    <span className="text-xl font-medium opacity-90 tracking-wide uppercase">District Administration</span>
                 </div>
 
                 {/* Center Content */}
                 <div className="flex-1 flex flex-col justify-center items-center z-10 text-center">
                     <div>
                         <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-6 tracking-tight drop-shadow-sm">
-                            Task Monitoring <br /> Dashboard
+                            Task <br /> Dashboard
                         </h1>
-                        <h2 className="text-3xl font-light text-white mb-2">
-                            Jayant Nahata, IAS
-                        </h2>
-                        <div className="h-1 w-24 bg-indigo-400 mx-auto rounded-full mb-4 opacity-80"></div>
-                        <p className="opacity-90 text-xl font-medium leading-relaxed">Chief Executive Officer, Zila Panchayat,<br />District Dantewada</p>
+                        <div className="h-1 w-24 bg-sky-400 mx-auto rounded-full mb-6 opacity-80"></div>
+                        <p className="opacity-80 text-lg font-medium leading-relaxed">
+                            Centralized task monitoring &<br />management portal
+                        </p>
                     </div>
 
                     <div className="mt-10 backdrop-blur-md bg-white/10 p-4 px-8 rounded-full border border-white/20 shadow-2xl">
                         <div className="flex items-center gap-4">
-                            <CalendarIcon size={24} className="text-indigo-200" />
+                            <CalendarIcon size={24} className="text-sky-200" />
                             <span className="text-lg font-medium tracking-wide">{formattedDate}</span>
                         </div>
                     </div>
@@ -135,7 +120,7 @@ const Login = ({ onLogin }) => {
 
                 {/* Copyright */}
                 <div className="text-sm opacity-50 z-10 text-center mb-4">
-                    &copy; {date.getFullYear()} District Administration, Dantewada
+                    &copy; {date.getFullYear()} District Administration
                 </div>
             </motion.div>
 
@@ -166,13 +151,13 @@ const Login = ({ onLogin }) => {
                         <div className="flex p-1 bg-slate-100 dark:bg-slate-800 rounded-xl mb-8">
                             <button
                                 onClick={() => setRole('admin')}
-                                className={`flex-1 py-3 rounded-lg text-sm font-semibold transition-all shadow-sm ${role === 'admin' ? 'bg-white dark:bg-indigo-600 text-indigo-600 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700'}`}
+                                className={`flex-1 py-3 rounded-lg text-sm font-semibold transition-all shadow-sm ${role === 'admin' ? 'bg-white dark:bg-sky-600 text-sky-600 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700'}`}
                             >
                                 Admin View
                             </button>
                             <button
                                 onClick={() => setRole('viewer')}
-                                className={`flex-1 py-3 rounded-lg text-sm font-semibold transition-all shadow-sm ${role === 'viewer' ? 'bg-white dark:bg-indigo-600 text-indigo-600 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700'}`}
+                                className={`flex-1 py-3 rounded-lg text-sm font-semibold transition-all shadow-sm ${role === 'viewer' ? 'bg-white dark:bg-sky-600 text-sky-600 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700'}`}
                             >
                                 Agency View
                             </button>
@@ -184,13 +169,13 @@ const Login = ({ onLogin }) => {
                             <div>
                                 <label className="block text-base font-semibold text-slate-700 dark:text-slate-200 mb-2">Email Address</label>
                                 <div className="relative group">
-                                    <User className="absolute left-4 top-4 h-6 w-6 text-slate-400 group-focus-within:text-indigo-500 transition-colors" />
+                                    <User className="absolute left-4 top-4 h-6 w-6 text-slate-400 group-focus-within:text-sky-500 transition-colors" />
                                     <input
                                         type="email"
                                         required
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full pl-12 pr-4 py-4 text-lg rounded-xl border-2 border-slate-200 dark:border-slate-700 dark:bg-dark-card dark:text-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all"
+                                        className="w-full pl-12 pr-4 py-4 text-lg rounded-xl border-2 border-slate-200 dark:border-slate-700 dark:bg-dark-card dark:text-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 outline-none transition-all"
                                         placeholder="admin@example.com"
                                     />
                                 </div>
@@ -198,7 +183,7 @@ const Login = ({ onLogin }) => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-bold py-4 rounded-xl transition-all shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:-translate-y-0.5"
+                                className="w-full bg-sky-600 hover:bg-sky-700 text-white text-lg font-bold py-4 rounded-xl transition-all shadow-lg shadow-sky-500/30 hover:shadow-sky-500/50 hover:-translate-y-0.5"
                             >
                                 {loading ? 'Sending...' : 'Send Reset Link'}
                             </button>
@@ -215,13 +200,13 @@ const Login = ({ onLogin }) => {
                             <div>
                                 <label className="block text-base font-semibold text-slate-700 dark:text-slate-200 mb-2">Username / Agency</label>
                                 <div className="relative group">
-                                    <User className="absolute left-4 top-4 h-6 w-6 text-slate-400 group-focus-within:text-indigo-500 transition-colors" />
+                                    <User className="absolute left-4 top-4 h-6 w-6 text-slate-400 group-focus-within:text-sky-500 transition-colors" />
                                     <input
                                         type="text"
                                         required
                                         value={username}
                                         onChange={(e) => setUsername(e.target.value)}
-                                        className="w-full pl-12 pr-4 py-4 text-lg rounded-xl border-2 border-slate-200 dark:border-slate-700 dark:bg-dark-card dark:text-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all"
+                                        className="w-full pl-12 pr-4 py-4 text-lg rounded-xl border-2 border-slate-200 dark:border-slate-700 dark:bg-dark-card dark:text-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 outline-none transition-all"
                                         placeholder="Enter your name"
                                     />
                                 </div>
@@ -231,18 +216,18 @@ const Login = ({ onLogin }) => {
                                 <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}>
                                     <label className="block text-base font-semibold text-slate-700 dark:text-slate-200 mb-2">Password</label>
                                     <div className="relative group">
-                                        <Lock className="absolute left-4 top-4 h-6 w-6 text-slate-400 group-focus-within:text-indigo-500 transition-colors" />
+                                        <Lock className="absolute left-4 top-4 h-6 w-6 text-slate-400 group-focus-within:text-sky-500 transition-colors" />
                                         <input
                                             type="password"
                                             required
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
-                                            className="w-full pl-12 pr-4 py-4 text-lg rounded-xl border-2 border-slate-200 dark:border-slate-700 dark:bg-dark-card dark:text-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all"
+                                            className="w-full pl-12 pr-4 py-4 text-lg rounded-xl border-2 border-slate-200 dark:border-slate-700 dark:bg-dark-card dark:text-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 outline-none transition-all"
                                             placeholder="••••••••"
                                         />
                                     </div>
                                     <div className="flex justify-between items-center mt-2 px-1">
-                                        <button type="button" onClick={fetchHint} className="text-sm text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium">
+                                        <button type="button" onClick={fetchHint} className="text-sm text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-300 font-medium">
                                             Need a hint?
                                         </button>
                                         <button type="button" onClick={() => setShowForgot(true)} className="text-sm text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300">
@@ -258,7 +243,7 @@ const Login = ({ onLogin }) => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-bold py-4 rounded-xl transition-all shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:-translate-y-0.5"
+                                className="w-full bg-sky-600 hover:bg-sky-700 text-white text-lg font-bold py-4 rounded-xl transition-all shadow-lg shadow-sky-500/30 hover:shadow-sky-500/50 hover:-translate-y-0.5"
                             >
                                 {loading ? 'Checking...' : 'Sign In'}
                             </button>

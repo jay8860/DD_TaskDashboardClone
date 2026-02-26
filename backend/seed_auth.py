@@ -44,9 +44,9 @@ def seed_admin():
         migrate_db(db)
 
         username = "admin"
-        email = "jayant.nahata@alumni.iitd.ac.in"
-        password = "admin123"
-        hint = "Default: admin123"
+        email = ""
+        password = "devesh"
+        hint = "Default: devesh"
         
         user = db.query(models.User).filter(models.User.username == username).first()
         if not user:

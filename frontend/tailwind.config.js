@@ -12,13 +12,13 @@ export default {
             },
             colors: {
                 primary: {
-                    light: '#6366f1', // Indigo 500
-                    DEFAULT: '#4f46e5', // Indigo 600
-                    dark: '#4338ca', // Indigo 700
+                    light: '#38bdf8', // Sky 400
+                    DEFAULT: '#0284c7', // Sky 600
+                    dark: '#0369a1', // Sky 700
                 },
                 accent: {
-                    purple: '#8b5cf6',
-                    pink: '#ec4899',
+                    blue: '#2563eb',
+                    cyan: '#06b6d4',
                     green: '#10b981',
                     orange: '#f59e0b',
                 },
